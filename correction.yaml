@@ -1,0 +1,64 @@
+name: Deploy on Pull Request Events
+
+
+# on:
+#   push:
+
+    # branches:
+    #   - dev
+
+    # branches:
+    #   - '!staging'
+
+    # branches:
+    #   - 'feat/**'
+
+    # path:
+    #   - '**.ts'
+
+    # path:
+    #   - node-app
+
+
+# on:
+#   pull_request:
+#     types:
+#       - opened
+#       - closed
+
+
+# schedule:
+#   # 5 minutes
+#   - cron: '*/5 * * * *'
+  
+#   # 1 heure 30 minutes
+#   - cron: '0 */3 * * *'
+#   - cron: '30 1/3 * * *'
+
+#   # 3 heures du matin
+#   - cron: '0 3 * * 2'
+
+push:
+pull_request:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v2
+      #j
+      if: github.event_name == 'push' 
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '14'
+
+    - name: Install Dependencies
+      run: npm install
+
+    - name: Build
+      run: npm run build
+
